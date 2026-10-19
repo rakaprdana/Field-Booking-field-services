@@ -14,7 +14,8 @@ type FieldScheduleRequest struct {
 }
 
 type GenerateFieldScheduleForOneMonthRequest struct {
-	FiledID string `json:"fieldID" validate:"required"`
+	FieldID string `json:"fieldID" validate:"required"`
+	TimeID  string `json:"timeID" validate:"required"`
 }
 
 type UpdateFieladScheduleRequest struct {
@@ -39,7 +40,7 @@ type FieldScheduleResponse struct {
 
 type FieldScheduleForBookingResponse struct {
 	UUID         uuid.UUID                         `json:"uuid"`
-	PricePerHour int                               `json:"pricePerHour"`
+	PricePerHour string                            `json:"pricePerHour"`
 	Date         string                            `json:"date"`
 	Status       constants.FieldScheduleStatusName `json:"status"`
 	Time         string                            `json:"time"`
