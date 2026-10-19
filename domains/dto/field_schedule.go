@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type FieladScheduleRequest struct {
+type FieldScheduleRequest struct {
 	FieldID string   `json:"fieldID" validate:"required"`
 	Date    string   `json:"date" validate:"required"`
 	TimeIDs []string `json:"timeIDs" validate:"required"`
@@ -28,7 +28,7 @@ type UpdateStatusFieladScheduleRequest struct {
 
 type FieldScheduleResponse struct {
 	UUID         uuid.UUID                         `json:"uuid"`
-	FieladName   string                            `json:"fieldName"`
+	FieldName    string                            `json:"fieldName"`
 	PricePerHour int                               `json:"pricePerHour"`
 	Date         string                            `json:"date"`
 	Status       constants.FieldScheduleStatusName `json:"status"`
@@ -37,7 +37,7 @@ type FieldScheduleResponse struct {
 	UpdatedAt    *time.Time                        `json:"updatedAt"`
 }
 
-type FiealdScheduleForBookingResponse struct {
+type FieldScheduleForBookingResponse struct {
 	UUID         uuid.UUID                         `json:"uuid"`
 	PricePerHour int                               `json:"pricePerHour"`
 	Date         string                            `json:"date"`

@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type FieladRequest struct {
+type FieldRequest struct {
 	Name         string                 `json:"name" validate:"required"`
 	Code         string                 `json:"code" validate:"required"`
 	PricePerHour int                    `json:"pricePerHour" validate:"required"`
@@ -32,7 +32,7 @@ type FieldResponse struct {
 	UpdatedAt    *time.Time `json:"updatedAt"`
 }
 
-type FieladDetailResponse struct {
+type FieldDetailResponse struct {
 	Name         string     `json:"name"`
 	Code         string     `json:"code"`
 	PricePerHour int        `json:"pricePerHour"`
