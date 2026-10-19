@@ -9,6 +9,8 @@ var (
 	ErrUnauthorized        = errors.New("Unauthorized")
 	ErrInvalidToken        = errors.New("Invalid token")
 	ErrForbidden           = errors.New("Forbidden")
+	ErrInvalidUploadFile   = errors.New("Invalid upload file")
+	ErrSizeTooBig          = errors.New("File size is too big")
 )
 
 var GeneralErrors = []error{
@@ -18,4 +20,6 @@ var GeneralErrors = []error{
 	ErrUnauthorized,
 	ErrInvalidToken,
 	ErrForbidden,
+	ErrInvalidUploadFile,
+	ErrSizeTooBig,
 }

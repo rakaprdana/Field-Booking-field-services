@@ -21,10 +21,10 @@ var mapFieldScheduleStatusStringToInt = map[FieldScheduleStatusName]FieldSchedul
 	BookedString:    Booked,
 }
 
-func (f FieldScheduleStatus) GetString() FieldScheduleStatusName {
+func (f FieldScheduleStatus) GetStatusString() FieldScheduleStatusName {
 	return mapFieldScheduleStatusIntToString[f]
 }
 
-func (f FieldScheduleStatusName) GetInt() FieldScheduleStatus {
+func (f FieldScheduleStatusName) GetStatusInt() FieldScheduleStatus {
 	return mapFieldScheduleStatusStringToInt[f]
 }
