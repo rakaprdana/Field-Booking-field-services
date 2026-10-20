@@ -19,7 +19,7 @@ type FieldScheduleRoute struct {
 func (f *FieldScheduleRoute) Run() {
 	group := f.group.Group("/field/schedule")
 	group.GET("", middlewares.AuthenticatedWithoutToken(), f.controller.GetFieldSchedule().GetAllByFieldIDAndDate)
-	group.PATCH("/:uui", middlewares.AuthenticatedWithoutToken(), f.controller.GetFieldSchedule().UpdateStatus)
+	group.PATCH("/:uuid", middlewares.AuthenticatedWithoutToken(), f.controller.GetFieldSchedule().UpdateStatus)
 
 	group.Use(middlewares.Authenticated())
 	group.GET("/pagination", middlewares.CheckRole([]string{

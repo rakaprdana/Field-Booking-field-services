@@ -13,7 +13,7 @@ type FieldSchedule struct {
 	UUID      uuid.UUID                     `gorm:"type:uuid;not null"`
 	FieldID   uint                          `gorm:"type:int;not null"`
 	TimeID    uint                          `gorm:"type:int;not null"`
-	Date      time.Time                     `gorm:"type:int;not null"`
+	Date      time.Time                     `gorm:"type:date;not null"`
 	Status    constants.FieldScheduleStatus `gorm:"type:int;not null"`
 	CreatedAt *time.Time
 	UpdatedAt *time.Time

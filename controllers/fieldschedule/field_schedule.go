@@ -156,6 +156,7 @@ func (f *FieldScheduleController) GetAllByFieldIDAndDate(ctx *gin.Context) {
 			Err:  err,
 			Gin:  ctx,
 		})
+		return
 	}
 
 	response.HttpResponse(response.ParamHTTPResp{
@@ -200,6 +201,7 @@ func (f *FieldScheduleController) GetAllWithPagination(ctx *gin.Context) {
 			Err:  err,
 			Gin:  ctx,
 		})
+		return
 	}
 
 	response.HttpResponse(response.ParamHTTPResp{
@@ -230,8 +232,8 @@ func (f *FieldScheduleController) GetByUUID(ctx *gin.Context) {
 
 // Update implements [IFieldScheduleController].
 func (f *FieldScheduleController) Update(ctx *gin.Context) {
-	var params dto.UpdateFieladScheduleRequest
-	err := ctx.ShouldBindJSON(&params)
+	var req dto.UpdateFieladScheduleRequest
+	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
 		response.HttpResponse(response.ParamHTTPResp{
 			Code: http.StatusBadRequest,
@@ -242,7 +244,7 @@ func (f *FieldScheduleController) Update(ctx *gin.Context) {
 	}
 
 	validate := validator.New()
-	err = validate.Struct(err)
+	err = validate.Struct(req)
 	if err != nil {
 		errMessage := http.StatusText(http.StatusUnprocessableEntity)
 		errResponse := errValidate.ErrValidationResponse(err)
@@ -255,7 +257,7 @@ func (f *FieldScheduleController) Update(ctx *gin.Context) {
 		})
 		return
 	}
-	result, err := f.service.GetFieldSchedule().Update(ctx, ctx.Param("uuid"), &params)
+	result, err := f.service.GetFieldSchedule().Update(ctx, ctx.Param("uuid"), &req)
 	if err != nil {
 		response.HttpResponse(response.ParamHTTPResp{
 			Code: http.StatusBadRequest,
@@ -284,9 +286,8 @@ func (f *FieldScheduleController) UpdateStatus(ctx *gin.Context) {
 		})
 		return
 	}
-
 	validate := validator.New()
-	err = validate.Struct(err)
+	err = validate.Struct(req)
 	if err != nil {
 		errMessage := http.StatusText(http.StatusUnprocessableEntity)
 		errResponse := errValidate.ErrValidationResponse(err)
