@@ -1,10 +1,12 @@
 package middlewares
 
 import (
+	"context"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"field-services/clients"
 	response "field-services/common/reponses"
@@ -125,6 +127,9 @@ func Authenticated() gin.HandlerFunc {
 			responseUnauthorized(ctx, err.Error())
 			return
 		}
+		cleanToken := strings.TrimSpace(strings.TrimPrefix(token, "Bearer"))
+		newCtx := context.WithValue(ctx.Request.Context(), constants.Token, cleanToken)
+		ctx.Request = ctx.Request.WithContext(newCtx)
 		ctx.Next()
 	}
 }
