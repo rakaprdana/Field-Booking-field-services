@@ -58,8 +58,13 @@ func (f *FieldRegistry) FindAllWithPagination(
 		total  int64
 	)
 
-	if param.SortColumn != nil {
-		sort = fmt.Sprintf("%s %s", *param.SortColumn, *param.SortOrder)
+	order := "desc"
+	if param.SortOrder != nil && *param.SortOrder != " " {
+		order = *param.SortOrder
+	}
+
+	if param.SortColumn != nil && *param.SortColumn != "" {
+		sort = fmt.Sprintf("%s %s", *param.SortColumn, order)
 	} else {
 		sort = "created_at desc"
 	}
@@ -79,13 +84,12 @@ func (f *FieldRegistry) FindAllWithPagination(
 
 	err = f.db.
 		WithContext(ctx).
-		Order(sort).
+		Model(&models.Field{}).
 		Count(&total).
 		Error
 	if err != nil {
 		return nil, 0, errWrap.WrapError(constErr.ErrSQLError)
 	}
-
 	return fields, total, nil
 }
 

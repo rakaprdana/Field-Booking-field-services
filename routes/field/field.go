@@ -19,7 +19,7 @@ type FieldRoute struct {
 func (f *FieldRoute) Run() {
 	group := f.group.Group("/field")
 	group.GET("", middlewares.AuthenticatedWithoutToken(), f.controller.GetField().GetAllWithoutPagination)
-	group.GET("/:uui", middlewares.AuthenticatedWithoutToken(), f.controller.GetField().GetByUUID)
+	group.GET("/:uuid", middlewares.AuthenticatedWithoutToken(), f.controller.GetField().GetByUUID)
 
 	group.Use(middlewares.Authenticated())
 	group.GET("/pagination", middlewares.CheckRole([]string{

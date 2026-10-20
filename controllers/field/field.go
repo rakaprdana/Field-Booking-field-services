@@ -115,6 +115,7 @@ func (f *FieldController) GetAllWithPagination(ctx *gin.Context) {
 			Err:  err,
 			Gin:  ctx,
 		})
+		return
 	}
 
 	response.HttpResponse(response.ParamHTTPResp{
@@ -177,6 +178,7 @@ func (f *FieldController) Update(ctx *gin.Context) {
 		return
 	}
 
+	req.UUID = ctx.Param("uuid")
 	validate := validator.New()
 	err = validate.Struct(&req)
 	if err != nil {

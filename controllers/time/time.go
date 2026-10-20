@@ -19,7 +19,7 @@ type TimeController struct {
 // Create implements [ITimeController].
 func (t *TimeController) Create(ctx *gin.Context) {
 	var req dto.TimeRequest
-	err := ctx.ShouldBindJSON(ctx)
+	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
 		response.HttpResponse(response.ParamHTTPResp{
 			Code: http.StatusBadRequest,
