@@ -123,7 +123,7 @@ func (f *FieldScheduleRegistry) FindByDateAndTimeID(
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, errWrap.WrapError(constErrFieldSchedule.ErrFieldScheduleNotFound)
+			return nil, nil
 		}
 		return nil, errWrap.WrapError(constErr.ErrSQLError)
 	}

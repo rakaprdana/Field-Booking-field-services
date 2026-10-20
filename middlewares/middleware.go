@@ -100,9 +100,27 @@ func CheckRole(roles []string, client clients.IClientRegistry) gin.HandlerFunc {
 		ctx.Next()
 	}
 }
-func AuthenticatedWithoutTOken() gin.HandlerFunc {
+func AuthenticatedWithoutToken() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		err := validateAPIKey(ctx)
+		if err != nil {
+			responseUnauthorized(ctx, err.Error())
+			return
+		}
+		ctx.Next()
+	}
+}
+
+func Authenticated() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var err error
+		token := ctx.GetHeader(constants.Authorization)
+		if token == "" {
+			responseUnauthorized(ctx, constErr.ErrUnauthorized.Error())
+			return
+		}
+
+		err = validateAPIKey(ctx)
 		if err != nil {
 			responseUnauthorized(ctx, err.Error())
 			return

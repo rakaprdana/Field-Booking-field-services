@@ -13,7 +13,7 @@ func (c *ClientRegistry) GetUser() client.IUserClient {
 	return client.NewUserClient(
 		clientConfig.NewClientConfig(
 			clientConfig.WithBaseURL(config.Config.InternalService.User.Host),
-			clientConfig.WithSignatureKey(config.Config.SignatureKey),
+			clientConfig.WithSignatureKey(config.Config.InternalService.User.SignatureKey),
 		),
 	)
 }

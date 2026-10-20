@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	errValidate "field-services/common/errors"
 	response "field-services/common/reponses"
 	"field-services/domains/dto"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 	"field-services/services"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 )
 
 type TimeController struct {
@@ -17,6 +19,29 @@ type TimeController struct {
 // Create implements [ITimeController].
 func (t *TimeController) Create(ctx *gin.Context) {
 	var req dto.TimeRequest
+	err := ctx.ShouldBindJSON(ctx)
+	if err != nil {
+		response.HttpResponse(response.ParamHTTPResp{
+			Code: http.StatusBadRequest,
+			Err:  err,
+			Gin:  ctx,
+		})
+		return
+	}
+	validate := validator.New()
+	err = validate.Struct(req)
+	if err != nil {
+		errMessage := http.StatusText(http.StatusUnprocessableEntity)
+		errResponse := errValidate.ErrValidationResponse(err)
+		response.HttpResponse(response.ParamHTTPResp{
+			Code:    http.StatusBadRequest,
+			Err:     err,
+			Message: &errMessage,
+			Data:    errResponse,
+			Gin:     ctx,
+		})
+		return
+	}
 	result, err := t.service.GetTime().Create(ctx, &req)
 	if err != nil {
 		response.HttpResponse(response.ParamHTTPResp{
