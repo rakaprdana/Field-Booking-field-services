@@ -25,4 +25,4 @@ WORKDIR /app
 EXPOSE 8001
 
 COPY --from=builder /app /app
-ENTRYPOINT [ "/app/user-service" ]
+ENTRYPOINT [ "/app/field-service" ]
