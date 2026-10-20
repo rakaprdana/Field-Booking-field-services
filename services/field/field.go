@@ -14,6 +14,8 @@ import (
 	"mime/multipart"
 	"path"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type FieldService struct {
@@ -139,8 +141,8 @@ func (f *FieldService) GetByUUID(ctx context.Context, uuid string) (*dto.FieldRe
 }
 
 // Update implements [IFieldService].
-func (f *FieldService) Update(ctx context.Context, uuid string, req *dto.UpdateFieldRequest) (*dto.FieldResponse, error) {
-	field, err := f.repository.GetField().FindByUUID(ctx, uuid)
+func (f *FieldService) Update(ctx context.Context, uuidParam string, req *dto.UpdateFieldRequest) (*dto.FieldResponse, error) {
+	field, err := f.repository.GetField().FindByUUID(ctx, uuidParam)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +158,7 @@ func (f *FieldService) Update(ctx context.Context, uuid string, req *dto.UpdateF
 		}
 	}
 
-	fieldResult, err := f.repository.GetField().Update(ctx, uuid, &models.Field{
+	fieldResult, err := f.repository.GetField().Update(ctx, uuidParam, &models.Field{
 		Code:         req.Code,
 		Name:         req.Name,
 		PricePerHour: req.PricePerHour,
@@ -167,8 +169,9 @@ func (f *FieldService) Update(ctx context.Context, uuid string, req *dto.UpdateF
 		return nil, err
 	}
 
+	uuidParsed, _ := uuid.Parse(uuidParam)
 	response := &dto.FieldResponse{
-		UUID:         fieldResult.UUID,
+		UUID:         uuidParsed,
 		Code:         fieldResult.Code,
 		Name:         fieldResult.Name,
 		PricePerHour: fieldResult.PricePerHour,

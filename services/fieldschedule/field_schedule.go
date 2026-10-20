@@ -207,6 +207,7 @@ func (f *FieldScheduleService) GetByUUID(ctx context.Context, uuid string) (*dto
 		PricePerHour: fieldSchedule.Field.PricePerHour,
 		Date:         fieldSchedule.Date.Format(time.DateOnly),
 		Status:       fieldSchedule.Status.GetStatusString(),
+		Time:         fmt.Sprintf("%s - %s", fieldSchedule.Time.StartTime, fieldSchedule.Time.EndTime),
 		CreatedAt:    fieldSchedule.CreatedAt,
 		UpdatedAt:    fieldSchedule.UpdatedAt,
 	}
